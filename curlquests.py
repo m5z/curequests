@@ -5,7 +5,7 @@ import shlex
 import requests
 
 
-class CuRequests:
+class Curlquests:
     _COOKIE_PREFIX = 'Cookie: '
 
     def __init__(self, curl):
@@ -16,7 +16,7 @@ class CuRequests:
     def from_file(filename):
         with codecs.open(filename, 'r', 'utf-8') as f:
             curl = '\n'.join(f.readlines())
-        return CuRequests(curl)
+        return Curlquests(curl)
 
     def response(self):
         if self.data:
@@ -50,13 +50,13 @@ class CuRequests:
             i += 1
 
     def _parse_header(self, header_arg):
-        if header_arg.startswith(CuRequests._COOKIE_PREFIX):
+        if header_arg.startswith(Curlquests._COOKIE_PREFIX):
             self._populate_cookies(header_arg)
         else:
             self._insert(self.headers, header_arg, ': ')
 
     def _populate_cookies(self, cookie_arg):
-        cookie_str = cookie_arg[len(CuRequests._COOKIE_PREFIX):]
+        cookie_str = cookie_arg[len(Curlquests._COOKIE_PREFIX):]
         cookies_list = cookie_str.split('; ')
         for cookie in cookies_list:
             self._insert(self.cookies, cookie, '=')
@@ -76,7 +76,7 @@ class CuRequests:
 
 if __name__ == '__main__':
     def demo(curl):
-        response = CuRequests(curl).response()
+        response = Curlquests(curl).response()
 
         response.encoding = 'utf-8'
 
